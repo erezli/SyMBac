@@ -28,7 +28,8 @@ class Cell:
         parent = None,
         daughter = None,
         lysis_p = 0,
-        pinching_sep = 0
+        pinching_sep = 0,
+        barcode = []
     ):
         
         """
@@ -92,6 +93,7 @@ class Cell:
         self.parent = parent
         self.daughter = daughter
         self.pinching_sep = pinching_sep
+        self.barcode = barcode
         
 
     def create_pm_cell(self):
@@ -136,6 +138,8 @@ class Cell:
             cell_body.angle = self.angle
             cell_shape.friction=0
             #self.space.add(cell_body, cell_shape)
+            daughter_barcode = copy.deepcopy(self.barcode).append("1")
+            self.barcode.append("0")
             daughter_details = {
                 "length": daughter_length,
                 "width": np.random.normal(self.width_mean,self.width_var),
@@ -152,7 +156,8 @@ class Cell:
                 "width_mean": self.width_mean,
                 "lysis_p": self.lysis_p,
                 "parent": self.parent,
-                "pinching_sep": 0
+                "pinching_sep": 0,
+                "barcode": daughter_barcode
             }
 
             
